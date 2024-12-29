@@ -7,10 +7,10 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { UsersActionDialog } from './components/users-action-dialog'
+import { UsersActionDialog } from '@/components/dialog/users-action-dialog'
 import { columns } from './components/users-columns'
 import { UsersDeleteDialog } from './components/users-delete-dialog'
-import { UsersInviteDialog } from './components/users-invite-dialog'
+import { UsersInviteDialog } from '@/components/dialog/users-invite-dialog'
 import { UsersTable } from './components/users-table'
 import UsersContextProvider, {
   type UsersDialogType,
