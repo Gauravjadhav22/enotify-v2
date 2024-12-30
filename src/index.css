@@ -139,3 +139,9 @@
     @apply min-h-svh w-full bg-background text-foreground;
   }
 }
+.shadcn-phone-input {
+  @apply w-full border rounded-md px-2 py-1 text-black bg-background;
+}
+.flag-dropdown {
+  @apply bg-foreground;
+}

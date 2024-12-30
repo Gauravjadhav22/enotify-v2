@@ -12,7 +12,7 @@ export default function ForgotPassword() {
             Forgot Password
           </h1>
           <p className='text-sm text-muted-foreground'>
-            Enter your registered email and <br /> we will send you a link to
+            Enter your registered phone number and <br /> we will send you a link to
             reset your password.
           </p>
         </div>

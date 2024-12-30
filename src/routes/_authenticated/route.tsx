@@ -9,7 +9,6 @@ import SkipToMain from '@/components/skip-to-main'
 export const Route = createFileRoute('/_authenticated')({
   component: RouteComponent,
 })
-
 function RouteComponent() {
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
   return (
@@ -18,13 +17,13 @@ function RouteComponent() {
         <SkipToMain />
         <AppSidebar />
         <div
-          id='content'
+          id="content"
           className={cn(
             'max-w-full w-full ml-auto',
             'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon))]',
             'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
             'transition-[width] ease-linear duration-200',
-            'h-svh flex flex-col'
+            'h-svh flex flex-col',
           )}
         >
           <Outlet />

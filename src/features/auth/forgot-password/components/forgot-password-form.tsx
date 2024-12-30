@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import PhoneInput from 'react-phone-input-2'
 
 type ForgotFormProps = HTMLAttributes<HTMLDivElement>
 
@@ -45,7 +46,7 @@ export function ForgotForm({ className, ...props }: ForgotFormProps) {
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='grid gap-2'>
+          <div className='grid gap-4'>
             <FormField
               control={form.control}
               name='email'
@@ -53,7 +54,16 @@ export function ForgotForm({ className, ...props }: ForgotFormProps) {
                 <FormItem className='space-y-1'>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder='name@example.com' {...field} />
+                  <PhoneInput
+                      country="in"
+                      placeholder="Enter phone number"
+                      inputProps={{
+                        name: 'phoneNumber',
+                        required: true,
+                      }}
+                      containerClass="shadcn-phone-input-container"
+                      inputClass="shadcn-phone-input border rounded-md px-2 py-1 text-black w-full" {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
