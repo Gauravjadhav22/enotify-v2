@@ -34,7 +34,10 @@ export const SendContactMessageForm = ({
 }: {
   instance: Instance
 }) => {
-  const sendMessageMutation = useMutation(sendTestContactMessageQuery)
+  const sendMessageMutation = useMutation({
+    mutationKey: ["sendContactMessage"],
+    mutationFn: sendTestContactMessageQuery,
+  })
   const queryClient = useQueryClient()
 
   const { toast } = useToast()
@@ -57,7 +60,7 @@ export const SendContactMessageForm = ({
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(["userInstances"])
+          queryClient.invalidateQueries({ queryKey: ["userInstances"] })
 
           toast({
             variant: "default",
@@ -146,7 +149,7 @@ export const SendContactMessageForm = ({
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit" disabled={sendMessageMutation.isLoading}>
+          <Button type="submit" disabled={sendMessageMutation.isPending}>
             Send message
           </Button>
         </div>

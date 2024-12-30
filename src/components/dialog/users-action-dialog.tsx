@@ -16,7 +16,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { PasswordInput } from '@/components/password-input'
 import { SelectDropdown } from '@/components/select-dropdown'
 import { userTypes } from './data/data'
-import { User } from './data/schema'
 import { Drawer } from './drawer'
 
 const formSchema = z
@@ -81,12 +80,12 @@ const formSchema = z
 type UserForm = z.infer<typeof formSchema>
 
 interface Props {
-  currentRow?: User
+  currentRow?: any
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
-export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
+export function UsersActionDialog({ currentRow, open, onOpenChange=()=>{} }: Props) {
   const isEdit = !!currentRow
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
@@ -126,8 +125,8 @@ export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
   return (
     <Drawer
       open={open}
-      onClose={onOpenChange}
-      onOpenChange={onOpenChange}
+      onClose={()=>{onOpenChange(false)}}
+      // onOpenChange={onOpenChange}
       title={isEdit ? 'Edit User' : 'Add New User'}
     >
       <ScrollArea className='h-[26.25rem] w-full pr-4 -mr-4 py-1'>

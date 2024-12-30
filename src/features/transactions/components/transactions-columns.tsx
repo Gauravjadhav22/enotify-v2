@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import LongText from '@/components/long-text';
 import { DataTableColumnHeader } from './data-table-column-header.tsx';
-import { Transaction } from '@/types/transaction.ts';
 
 export const columns: ColumnDef<Transaction>[] = [
   {

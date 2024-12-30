@@ -11,11 +11,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUsersContext } from '../context/users-context'
-import { Report } from '../data/schema.ts'
-import { WhatsAppSentMessage } from '@/types/messages.ts'
+import { UserQueueItem } from '@/types/queue'
+
 
 interface DataTableRowActionsProps {
-  row: Row<WhatsAppSentMessage>
+  row: Row<UserQueueItem>
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {

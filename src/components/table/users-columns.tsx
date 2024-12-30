@@ -6,7 +6,6 @@ import LongText from '@/components/long-text'
 import { callTypes, userTypes } from './data/data'
 import { User } from './data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
 
 export const columns: ColumnDef<User>[] = [
   {

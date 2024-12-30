@@ -1,13 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
 import LongText from '@/components/long-text'
 import { callTypes } from '../data/data.ts'
-import { Report } from '../data/schema.ts'
 import { DataTableColumnHeader } from './data-table-column-header.tsx'
 import { WhatsAppSentMessage } from '@/types/messages'
-import { reports } from '../data/messages.ts'
 export const columns: ColumnDef<WhatsAppSentMessage>[] = [
   {
     accessorKey: 'messageId',
@@ -46,7 +43,7 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
       <DataTableColumnHeader column={column} title="Content" />
     ),
     cell: ({ row }) => (
-      <div>{row.original?.content || 'N/A'}</div>
+      <div>{row?.original?.content?.toString() || 'N/A'}</div>
     ),
   },
   {
@@ -69,14 +66,14 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Submitted At" />
     ),
-    cell: ({ row }) => <div>{row.original?.submittedAt.toLocaleString()}</div>,
+    cell: ({ row }) => <div>{row.original?.submittedAt?.toLocaleString()||''}</div>,
   },
   {
     accessorKey: 'sentFailedAt',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Sent/Failed At" />
     ),
-    cell: ({ row }) => <div>{row.original?.sentFailedAt.toLocaleString()}</div>,
+    cell: ({ row }) => <div>{row.original?.sentFailedAt?.toLocaleString()||''}</div>,
   },
   {
     accessorKey: 'deliveredReadAt',
@@ -84,7 +81,7 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
       <DataTableColumnHeader column={column} title="Delivered/Read At" />
     ),
     cell: ({ row }) => (
-      <div>{row.original?.deliveredReadAt.toLocaleString()}</div>
+      <div>{row.original?.deliveredReadAt?.toLocaleString()||''}</div>
     ),
   },
 ];

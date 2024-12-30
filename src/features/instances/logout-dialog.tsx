@@ -1,5 +1,4 @@
 import { Instance } from "@/types/instances"
-import { User } from "@/types/user"
 import {
   AlertDialog,
   AlertDialogAction,

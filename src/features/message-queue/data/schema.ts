@@ -5,7 +5,14 @@ const resellerSchema = z.object({
   name: z.string(),
   phoneNumber: z.string(),
 });
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const userStatusSchema = z.union([
+  z.literal('active'),
+  z.literal('inactive'),
+  z.literal('invited'),
+  z.literal('suspended'),
+])
+export type UserStatus = z.infer<typeof userStatusSchema>
 const userSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),

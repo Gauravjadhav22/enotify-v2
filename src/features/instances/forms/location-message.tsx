@@ -1,7 +1,6 @@
 import { useMemo, useRef } from "react"
 import {
   sendLocationMessageQuery,
-  sendTestTextMessageQuery,
 } from "@/queries/test-message"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -55,7 +54,10 @@ export const SendLocationMessageForm = ({
 }: {
   instance: Instance
 }) => {
-  const sendMessageMutation = useMutation(sendLocationMessageQuery)
+  const sendMessageMutation = useMutation({
+    mutationKey: ["sendLocationMessage"],
+    mutationFn: sendLocationMessageQuery,
+  })
   const queryClient = useQueryClient()
 
   const { toast } = useToast()
@@ -82,7 +84,7 @@ export const SendLocationMessageForm = ({
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(["userInstances"])
+          queryClient.invalidateQueries({ queryKey: ["userInstances"] })
 
           toast({
             variant: "default",
@@ -229,7 +231,7 @@ export const SendLocationMessageForm = ({
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit" disabled={sendMessageMutation.isLoading}>
+          <Button type="submit" disabled={sendMessageMutation.isPending}>
             Send message
           </Button>
         </div>

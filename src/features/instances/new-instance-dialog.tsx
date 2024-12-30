@@ -1,17 +1,12 @@
-"use client"
-
-import { useState } from "react"
-import connectedGif from "@/../public/illustrations/no-users.svg"
-import loadingGif from "@/../public/illustrations/qrcode-loading.svg"
-import { createInstanceQuery } from "@/queries/instances"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-
-import { User, UserQueryData } from "@/types/user"
-import { useInstance } from "@/hooks/use-qrcode"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { createInstanceQuery } from "@/queries/instances";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { UserQueryData } from "@/types/user";
+import { useInstance } from "@/hooks/use-qrcode";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -20,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -29,66 +24,69 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 const createInstanceSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters long"),
   userName: z.string().optional(),
-})
+});
 
 export const NewInstanceDialog: React.FC<{
-  children: React.ReactNode
-  user?: UserQueryData
+  children: React.ReactNode;
+  user?: UserQueryData;
 }> = ({ children, user }) => {
-  const [state, setState] = useState<"NAME" | "SCAN" | "CONNECTED">("NAME")
-  const queryClient = useQueryClient()
-
+  const [state, setState] = useState<"NAME" | "SCAN" | "CONNECTED">("NAME");
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof createInstanceSchema>>({
     resolver: zodResolver(createInstanceSchema),
     defaultValues: {
       name: "",
       userName: user?.name,
     },
-  })
+  });
+  const createInstanceMutation = useMutation({
+    mutationKey: ["createInstance"],
+    mutationFn: createInstanceQuery,
+    onSuccess: (data) => {
+        if (user) {
+          setState("CONNECTED");
+          return;
+        }
+        // startListeners(data?.data.id);
+        setState("SCAN");
+      },
+    }
+  );
+  const {  startListeners } = useInstance(() => {
+    setState("CONNECTED");
+    queryClient.invalidateQueries({ queryKey: ["userInstances"] });
+  });
 
-  const createInstanceMutation = useMutation(createInstanceQuery)
-  const { qrcode, startListeners } = useInstance(() => {
-    setState("CONNECTED")
-    queryClient.invalidateQueries(["userInstances"])
-  })
-
-  const handleSubmit = (data: z.infer<typeof createInstanceSchema>) => {
-    createInstanceMutation.mutate(
-      {
+  const handleSubmit = async () => {
+    const data = form.getValues(); // Get form values
+    try {
+      await createInstanceMutation.mutateAsync({
         name: data.name,
         userId: user?.id,
-      },
-      {
-        onSuccess: (data) => {
-          if (user) {
-            setState("CONNECTED")
-            return
-          }
-
-          startListeners(data.data.id)
-          setState("SCAN")
-        },
-      }
-    )
-  }
+      });
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately 
+    }
+  };
 
   return (
     <div>
       <Dialog
         onOpenChange={(open) => {
           if (!open) {
-            setState("NAME")
+            setState("NAME");
           }
         }}
       >
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className={state == "NAME" ? "" : "max-w-2xl"}>
+        <DialogContent className={state === "NAME" ? "" : "max-w-2xl"}>
           <DialogHeader>
             <DialogTitle>Create new Instance</DialogTitle>
             <DialogDescription>
@@ -96,13 +94,9 @@ export const NewInstanceDialog: React.FC<{
               your other accounts.
             </DialogDescription>
           </DialogHeader>
-
-          {state == "NAME" && (
+          {state === "NAME" && (
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className="space-y-4"
-              >
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <FormField
                   control={form.control}
                   name="userName"
@@ -146,13 +140,12 @@ export const NewInstanceDialog: React.FC<{
                   )}
                 />
                 <DialogFooter>
-                  <Button>Get Started</Button>
+                  <Button type="submit">Get Started</Button> 
                 </DialogFooter>
               </form>
             </Form>
           )}
-
-          {state == "SCAN" && (
+          {state === "SCAN" && (
             <div className="flex justify-center items-center">
               <div>
                 <h1 className="text-lg font-bold">
@@ -164,24 +157,25 @@ export const NewInstanceDialog: React.FC<{
                 <p className="text-sm font-medium">
                   2. Tap Menu or Settings and select WhatsApp Web
                 </p>
-                <p className="text-sm font-medium">3. Tap on linked devices</p>
+                <p className="text-sm font-medium">
+                  3. Tap on linked devices
+                </p>
                 <p className="text-sm font-medium">
                   3. Point your phone to this screen to capture the code
                 </p>
               </div>
               <div className="ml-4">
-                <img
+                {/* <img
                   className="opacity-100"
                   src={qrcode || loadingGif.src}
                   alt="qr-code"
                   width={250}
                   height={250}
-                />
+                /> */}
               </div>
             </div>
           )}
-
-          {state == "CONNECTED" && (
+          {state === "CONNECTED" && (
             <div className="flex justify-center items-center">
               <div>
                 <h1 className="text-lg font-bold">
@@ -194,18 +188,18 @@ export const NewInstanceDialog: React.FC<{
                 </p>
               </div>
               <div className="ml-4">
-                <img
+                {/* <img
                   className="opacity-100"
                   src={connectedGif.src}
                   alt="connected successfully"
                   width={250}
                   height={250}
-                />
+                /> */}
               </div>
             </div>
           )}
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};

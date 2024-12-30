@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@/context/auth.context"
 
 import { Instance } from "@/types/instances"
 import {

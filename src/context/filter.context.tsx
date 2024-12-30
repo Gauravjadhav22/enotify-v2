@@ -61,13 +61,12 @@ export const _useFilterCtx = () => {
     },
   })
 
-  useQuery(
-    [],
-    () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["messages"],
+    queryFn: () => {
       return axiosClient.get("")
     },
-    {}
-  )
+  })
 
   return {
     filterForm,

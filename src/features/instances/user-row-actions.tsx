@@ -7,7 +7,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Row } from "@tanstack/react-table"
 
 import { Instance } from "@/types/instances"
-import { User } from "@/types/user"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -17,7 +16,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 
-import { LogoutInstanceDialog } from "./logout-dialog"
 import { ReconenctInstanceDialog } from "./reconnect"
 import { SettingsDialog } from "./settings-dialog"
 import { TestMessageDialog } from "./test-message"
@@ -37,13 +35,16 @@ export function UserRowActions<TData>({
     setReconnectOpen(true)
   }
 
-  const disconnectInstanceMutation = useMutation(instanceDisconnectQuery)
+  const disconnectInstanceMutation = useMutation({
+    mutationKey: ["instances"],
+    mutationFn: instanceDisconnectQuery,
+  })
 
   const disconnectInstance = async () => {
     disconnectInstanceMutation.mutate(instance.id, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["userInstances"])
-        queryClient.refetchQueries(["userInstances"])
+        queryClient.invalidateQueries({ queryKey: ["userInstances"] })
+        queryClient.refetchQueries({ queryKey: ["userInstances"] })
       },
     })
   }

@@ -59,10 +59,10 @@ export const ChangeValidity = ({
     },
   })
 
-  const debitQuotaMutation = useMutation(
-    ["instances"],
-    setInstanceExpiryDateQuery
-  )
+  const debitQuotaMutation = useMutation({
+    mutationKey: ["instances"],
+    mutationFn: setInstanceExpiryDateQuery,
+  })
   const queryClient = useQueryClient()
 
   const toaster = useToast()
@@ -79,7 +79,7 @@ export const ChangeValidity = ({
             description: "Instance quota debited successfully.",
             title: "Debit Success",
           })
-          queryClient.refetchQueries(["instances"])
+          queryClient.refetchQueries({ queryKey: ["instances"] })
           form.reset()
           onSuccess()
         },
@@ -206,7 +206,7 @@ export const ChangeValidity = ({
             />
           </div>
           <div className="flex justify-end">
-            <Button type="submit" disabled={debitQuotaMutation.isLoading}>
+            <Button type="submit" disabled={debitQuotaMutation.isPending}>
               Debit Quota
             </Button>
           </div>

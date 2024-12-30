@@ -8,7 +8,7 @@ interface DrawerProps {
   children: React.ReactNode
 }
 
-export const Drawer: React.FC<DrawerProps> = ({ open, onClose, title, children }) => {
+export const Drawer: React.FC<DrawerProps> = ({ open, onClose=()=>{}, title, children }) => {
   return (
     <div
       className={cn(

@@ -1,5 +1,6 @@
 import { Instance } from "@/types/instances"
 import { User } from "@/types/user"
+import { JSX } from "react"
 
 const date = new Date()
 

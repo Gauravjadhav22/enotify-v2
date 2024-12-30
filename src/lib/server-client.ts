@@ -1,16 +1,25 @@
-import { cookies as initCookies } from "next/headers"
-import axios from "axios"
+import axios from "axios";
+import { parse } from "cookie"; // Install with: npm install cookie
 
-export function getServerAxiosClient() {
-  const cookies = initCookies()
-  const token = cookies.get("token")
+/**
+ * Returns an Axios instance configured with the token extracted from cookies.
+ * @param req - The incoming server request.
+ * @returns A configured Axios instance.
+ */
+export function getServerAxiosClient(req: Request) {
+  // Extract cookies from the request headers
+  const cookies = req.headers.get("cookie") || ""; // Default to an empty string if no cookies are present
+  const parsedCookies = parse(cookies); // Parse the cookies into a key-value object
 
-  console.log("token", token?.value)
+  const token = parsedCookies["token"]; // Retrieve the "token" cookie
 
+  console.log("Token:", token); // Log the token for debugging
+
+  // Create and return the Axios client with the token in the Authorization header
   return axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL: import.meta.env.VITE_BASE_URL, // Vite's syntax for accessing environment variables
     headers: {
-      Authorization: `Bearer ${token?.value}`,
+      Authorization: token ? `Bearer ${token}` : "", // Include the token if available
     },
-  })
+  });
 }

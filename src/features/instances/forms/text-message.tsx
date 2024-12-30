@@ -28,7 +28,10 @@ const schema = z.object({
 })
 
 export const SendTextMessageForm = ({ instance }: { instance: Instance }) => {
-  const sendMessageMutation = useMutation(sendTestTextMessageQuery)
+  const sendMessageMutation = useMutation({
+    mutationKey: ["sendTestTextMessage"],
+    mutationFn: sendTestTextMessageQuery,
+  })
   const queryClient = useQueryClient()
 
   const { toast } = useToast()
@@ -49,7 +52,7 @@ export const SendTextMessageForm = ({ instance }: { instance: Instance }) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(["userInstances"])
+          queryClient.invalidateQueries({ queryKey: ["userInstances"] })
 
           toast({
             variant: "default",
@@ -110,7 +113,7 @@ export const SendTextMessageForm = ({ instance }: { instance: Instance }) => {
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit" disabled={sendMessageMutation.isLoading}>
+          <Button type="submit" disabled={sendMessageMutation.isPending}>
             Send message
           </Button>
         </div>

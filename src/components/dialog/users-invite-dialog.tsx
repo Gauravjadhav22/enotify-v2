@@ -1,18 +1,9 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconAlertTriangle, IconMailPlus, IconSend } from '@tabler/icons-react'
+import { IconAlertTriangle, IconSend } from '@tabler/icons-react'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -64,8 +55,8 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
   return (
 <Drawer
   open={open}
-  onClose={onOpenChange}
-  onOpenChange={onOpenChange}
+  onClose={()=>{onOpenChange(false)}}
+  // onOpenChange={onOpenChange}
   title={
     <span className="text-destructive">
       <IconAlertTriangle className="mr-1 inline-block stroke-destructive" size={18} /> Invite User

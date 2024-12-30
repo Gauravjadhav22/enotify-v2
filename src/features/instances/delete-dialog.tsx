@@ -24,7 +24,10 @@ export const DeleteInstanceDialog: React.FC<DeleteInstanceDialogProps> = ({
   instance,
   children,
 }) => {
-  const deleteInstanceMutation = useMutation(["instances"], instanceDeleteQuery)
+  const deleteInstanceMutation = useMutation({
+    mutationKey: ["instances"],
+    mutationFn: instanceDeleteQuery,
+  })
 
   return (
     <AlertDialog>

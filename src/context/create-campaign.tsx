@@ -2,8 +2,11 @@ import React, { SetStateAction, createContext, useEffect } from "react"
 import { proto } from "@whiskeysockets/baileys"
 
 import { CampaignDetails } from "@/types/campaign"
-import { Number } from "@/app/(dashboard)/dashboard/broadcast/create/sections/audience/types"
-
+type Number = {
+  value: string;
+  label: string;
+  isSelected?: boolean;
+};
 const steps: CampaingStep[] = [
   {
     id: "campaign-information",

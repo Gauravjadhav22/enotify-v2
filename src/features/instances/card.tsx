@@ -2,7 +2,7 @@ import { useState } from "react"
 import userIcon from "@/../public/user.png"
 // import { instanceDisconnectQuery } from "@/queries/instances"
 // import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { RefreshCcwIcon, SendIcon, SettingsIcon } from "lucide-react"
+import { RefreshCcwIcon, SendIcon, } from "lucide-react"
 
 import { Instance } from "@/types/instances"
 import { User } from "@/types/user"
@@ -11,9 +11,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-
-import { ReconenctInstanceDialog } from "./reconnect"
-import { SettingsDialog } from "./settings-dialog"
 import { TestMessageDialog } from "./test-message"
 import {
   getInstanceExpiryDate,
@@ -24,9 +21,9 @@ import clsx from "clsx"
 
 export const InstanceCard: React.FC<{
   instance: Instance
-  user: User
+  user: any
 }> = ({ instance, user }) => {
-  const [reconnectOpen, setReconnectOpen] = useState(false)
+  // const [reconnectOpen, setReconnectOpen] = useState(false)
   // const queryClient = useQueryClient()
 
   // const handleReconnect = async () => {
@@ -76,7 +73,7 @@ export const InstanceCard: React.FC<{
           <Avatar className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300">
             <AvatarImage src={instance.profilePicture}></AvatarImage>
             <AvatarFallback>
-              <img src={userIcon.src} alt="user" />
+              {/* <img src={userIcon.src} alt="user" /> */}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 truncate">

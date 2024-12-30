@@ -11,8 +11,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useToast } from "@/components/ui/use-toast"
-import { Button } from "@/components/Button"
-import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header"
+import { Button } from "@/components/ui/button"
+import { DataTableColumnHeader } from "@/components/table/data-table-column-header"
 
 import { DataTableRowActions } from "./row-actions"
 import { getInstanceQuota } from "./utils"

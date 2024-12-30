@@ -13,6 +13,7 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import {InstanceCard} from './card'
 // import { User } from '../users/data/schema'
 import { Instance } from '@/types/instances'
+import { User } from '../users/data/schema'
 
 export default function Instances() {
   const instance:Instance={
@@ -76,7 +77,12 @@ export default function Instances() {
     phoneNumber: "9876543210",
     password: "hashed_password",
     name: "John Doe",
-    role: "ADMIN",
+    firstName: "John",
+    lastName: "Doe",
+    email: "john@example.com",
+    username: "johndoe",
+    status: "active",
+    role: "admin",
     userStatus: "ACTIVE",
     timezone: "UTC",
     quota: 1000,
@@ -93,6 +99,7 @@ export default function Instances() {
       phoneNumber: "9998887777",
     },
   };
+  
   
  
   return (
@@ -138,7 +145,7 @@ export default function Instances() {
               <Card className='border-0 col-span-1 lg:col-span-4'>
                   <InstanceCard 
                     instance={instance} 
-                    user={dummyUser} 
+                    user={dummyUser as User} 
                   />
               </Card>
              

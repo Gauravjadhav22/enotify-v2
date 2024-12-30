@@ -1,12 +1,11 @@
 "use client"
 
 import { useAuth } from "@/context/auth.context"
-import noUsers from "@/../public/illustrations/no-users.svg"
 
 import { Instance } from "@/types/instances"
 import { User } from "@/types/user"
 import { Button } from "@/components/ui/button"
-import { DataTable } from "@/components/datatable"
+import { CommonTable } from "@/components/table/table"
 
 import { InstanceCard } from "./card"
 import { NewInstanceDialog } from "./new-instance-dialog"
@@ -28,7 +27,7 @@ export const RenderUserInstances: React.FC<RenderUserInstancesProps> = ({
   if (!isLoading && instances.length == 0) {
     return (
       <div className="flex justify-center flex-col items-center mt-16">
-        <img src={noUsers.src} alt="Loading image" className="w-80 h-80" />
+        {/* <img src={noUsers?.src} alt="Loading image" className="w-80 h-80" /> */}
         <h2 className="text-2xl font-bold mt-4 tracking-tighter">
           No instance found
         </h2>
@@ -44,10 +43,10 @@ export const RenderUserInstances: React.FC<RenderUserInstancesProps> = ({
 
   if (layout == "list") {
     return (
-      <DataTable
+      <CommonTable
         columns={getUserColumns(user as User)}
         data={instances}
-      ></DataTable>
+      ></CommonTable>
     )
   }
 
@@ -62,7 +61,7 @@ export const RenderUserInstances: React.FC<RenderUserInstancesProps> = ({
             <InstanceCard
               key={instance.id}
               instance={instance}
-              user={user}
+              user={user as User}
             ></InstanceCard>
           ))}
         </ul>

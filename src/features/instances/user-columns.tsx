@@ -7,9 +7,8 @@ import { User } from "@/types/user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header"
+import { DataTableColumnHeader } from "@/components/table/data-table-column-header"
 
-import { DataTableRowActions } from "./row-actions"
 import { UserRowActions } from "./user-row-actions"
 import {
   getInstanceExpiryDate,

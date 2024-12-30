@@ -67,10 +67,10 @@ export const SettingsDialog = ({
     },
   })
 
-  const updateInstanceMutation = useMutation(
-    ["updateInstance"],
-    updateInstanceQuery
-  )
+  const updateInstanceMutation = useMutation({
+    mutationKey: ["updateInstance"],
+    mutationFn: updateInstanceQuery,
+  })
 
   const { toast } = useToast()
   const queryClient = useQueryClient()
@@ -92,8 +92,8 @@ export const SettingsDialog = ({
       },
       {
         onSuccess: (data) => {
-          queryClient.invalidateQueries(["userInstances"])
-          queryClient.invalidateQueries(["instances"])
+          queryClient.invalidateQueries({ queryKey: ["userInstances"] })
+          queryClient.invalidateQueries({ queryKey: ["instances"] })
           toast({
             title: "Instance updated",
             description: "Your instance has been updated successfully",

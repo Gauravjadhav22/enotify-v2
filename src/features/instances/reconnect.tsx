@@ -1,9 +1,5 @@
-import { start } from "repl"
 import { useEffect, useState } from "react"
-import connectedGif from "@/../public/illustrations/no-users.svg"
-import loadingGif from "@/../public/illustrations/qrcode-loading.svg"
 import { useQueryClient } from "@tanstack/react-query"
-import { set } from "date-fns"
 
 import { axiosClient } from "@/lib/client"
 import { useInstance } from "@/hooks/use-qrcode"
@@ -13,9 +9,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { toast } from "@/components/ui/use-toast"
 import { toastError } from "@/components/toast/ToastMessage"
 
 export const ReconenctInstanceDialog = ({
@@ -33,13 +27,13 @@ export const ReconenctInstanceDialog = ({
 
   const [state, setState] = useState<"SCAN" | "CONNECTED">("SCAN")
 
-  const { isLoggedIn, startListeners, qrcode } = useInstance(() => {
+  const {  startListeners } = useInstance(() => {
     setState("CONNECTED")
 
     setTimeout(() => {
       onConnected()
       setState("SCAN")
-      queryClien.invalidateQueries(["userInstances"])
+      queryClien.invalidateQueries({ queryKey: ["userInstances"] })
 
     }, 2000)
   })
@@ -96,13 +90,13 @@ export const ReconenctInstanceDialog = ({
               </p>
             </div>
             <div className="ml-4">
-              <img
+              {/* <img
                 className="opacity-100"
                 src={qrcode || loadingGif.src}
                 alt="qr-code"
                 width={250}
                 height={250}
-              />
+              /> */}
             </div>
           </div>
         )}
@@ -116,13 +110,13 @@ export const ReconenctInstanceDialog = ({
               </p>
             </div>
             <div className="ml-4">
-              <img
+              {/* <img
                 className="opacity-100"
                 src={connectedGif.src}
                 alt="connected successfully"
                 width={250}
                 height={250}
-              />
+              /> */}
             </div>
           </div>
         )}

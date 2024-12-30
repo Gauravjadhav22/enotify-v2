@@ -29,7 +29,10 @@ const schema = z.object({
 })
 
 export const SendMediaMessageForm = ({ instance }: { instance: Instance }) => {
-  const sendMessageMutation = useMutation(sendMediaMessageQuery)
+  const sendMessageMutation = useMutation({
+    mutationKey: ["sendMediaMessage"],
+    mutationFn: sendMediaMessageQuery,
+  })
   const queryClient = useQueryClient()
   const [file, setFile] = useState<File | null>(null)
 
@@ -63,7 +66,7 @@ export const SendMediaMessageForm = ({ instance }: { instance: Instance }) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(["userInstances"])
+          queryClient.invalidateQueries({ queryKey: ["userInstances"] })
 
           toast({
             variant: "default",
@@ -135,7 +138,7 @@ export const SendMediaMessageForm = ({ instance }: { instance: Instance }) => {
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit" disabled={sendMessageMutation.isLoading}>
+          <Button type="submit" disabled={sendMessageMutation.isPending}>
             Send message
           </Button>
         </div>

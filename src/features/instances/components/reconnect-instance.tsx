@@ -39,7 +39,7 @@ export const ReconenctInstanceDialog = ({
     setTimeout(() => {
       onConnected()
       setState("SCAN")
-      queryClien.invalidateQueries(["userInstances"])
+      queryClien.invalidateQueries({ queryKey: ["userInstances"] })
 
     }, 2000)
   })
@@ -96,13 +96,13 @@ export const ReconenctInstanceDialog = ({
               </p>
             </div>
             <div className="ml-4">
-              <img
+              {/* <img
                 className="opacity-100"
                 src={qrcode || loadingGif.src}
                 alt="qr-code"
                 width={250}
                 height={250}
-              />
+              /> */}
             </div>
           </div>
         )}
@@ -116,13 +116,13 @@ export const ReconenctInstanceDialog = ({
               </p>
             </div>
             <div className="ml-4">
-              <img
+              {/* <img
                 className="opacity-100"
-                src={connectedGif.src}
+                src={connectedGif?.src || ""}
                 alt="connected successfully"
                 width={250}
                 height={250}
-              />
+              /> */}
             </div>
           </div>
         )}

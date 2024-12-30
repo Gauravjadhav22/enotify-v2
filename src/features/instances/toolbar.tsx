@@ -2,24 +2,15 @@
 
 import { useMemo } from "react"
 import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  CheckCircledIcon,
-  CircleIcon,
   Cross2Icon,
-  CrossCircledIcon,
-  QuestionMarkCircledIcon,
-  StopwatchIcon,
 } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 
 import { Instance } from "@/types/instances"
-import { User } from "@/types/user"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DataTableFacetedFilter } from "@/components/datatable/data-table-facted-filter"
-import { DataTableViewOptions } from "@/components/datatable/data-table-view-options"
+import { DataTableFacetedFilter } from "@/components/table/data-table-faceted-filter"
+import { DataTableViewOptions } from "@/components/table/data-table-view-options"
 
 import { statuses } from "./data"
 

@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import LongText from '@/components/long-text';
 import { DataTableColumnHeader } from './data-table-column-header';
-import { WhatsAppSentMessage } from '@/types/messages';
+import { WhatsAppMessageStatus, WhatsAppSentMessage } from '@/types/messages';
 
 export const columns: ColumnDef<WhatsAppSentMessage>[] = [
   {
@@ -43,7 +43,7 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
       <DataTableColumnHeader column={column} title="Content" />
     ),
     cell: ({ row }) => (
-      <div>{row.original?.content || 'N/A'}</div>
+      <div>{row.original?.content?.toString() || 'N/A'}</div>
     ),
   },
   {
@@ -52,21 +52,23 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      const status = row.original?.status || 'unknown';
-      const badgeColor =
-        {
-          pending: 'yellow',
-          sent: 'blue',
-          failed: 'red',
-          delivered: 'green',
-          read: 'purple',
-        }[status] || 'default';
+      const status: WhatsAppMessageStatus = row.original?.status || "PENDING"; // Default to a valid status
+      const badgeColor: Record<WhatsAppMessageStatus, string> = {
+        IN_QUEUE: "gray",
+        SENT: "blue",
+        DELIVERED: "green",
+        READ: "purple",
+        FAILED: "red",
+        PENDING: "yellow",
+      };
+    
       return (
-        <Badge variant="outline" className={cn('capitalize', badgeColor)}>
-          {status}
+        <Badge variant="outline" className={cn("capitalize", badgeColor[status])}>
+          {status.toLowerCase()} {/* Convert to lowercase for display */}
         </Badge>
       );
-    },
+    }
+
   },
   {
     accessorKey: 'submittedAt',
@@ -75,7 +77,7 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
     ),
     cell: ({ row }) => {
       const submittedAt = row.original?.submittedAt
-        ? new Date(row.original.submittedAt)
+        ? new Date(row.original?.submittedAt)
         : null;
       return <div>{submittedAt ? submittedAt.toLocaleString() : 'N/A'}</div>;
     },
@@ -99,7 +101,7 @@ export const columns: ColumnDef<WhatsAppSentMessage>[] = [
     ),
     cell: ({ row }) => {
       const deliveredReadAt = row.original?.deliveredReadAt
-        ? new Date(row.original.deliveredReadAt)
+        ? new Date(row.original?.deliveredReadAt || '')
         : null;
       return (
         <div>{deliveredReadAt ? deliveredReadAt.toLocaleString() : 'N/A'}</div>

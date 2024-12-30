@@ -6,8 +6,8 @@ export type UsersDialogType = 'invite' | 'add' | 'edit' | 'delete'
 interface UsersContextType {
   open: UsersDialogType | null
   setOpen: (str: UsersDialogType | null) => void
-  currentRow: Report | null
-  setCurrentRow: React.Dispatch<React.SetStateAction<Report | null>>
+  currentRow:any
+  setCurrentRow: any
 }
 
 const UsersContext = React.createContext<UsersContextType | null>(null)

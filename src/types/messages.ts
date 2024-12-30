@@ -1,7 +1,6 @@
 import { MessageType, proto } from "@whiskeysockets/baileys"
 
 import { Instance } from "./instances"
-import { z } from "zod"
 
 export interface WhatsAppReceivedMessage {
   messageId: string
@@ -39,7 +38,7 @@ export type WhatsAppMessageStatus =
   | "DELIVERED"
   | "READ"
   | "FAILED"
-
+  | "PENDING"
 type FailedReason = "UNKNOWN" | "INVALID_NUMBER" | "TIMEOUT"
 
 export interface WhatsAppSentMessage {
@@ -57,8 +56,13 @@ export interface WhatsAppSentMessage {
   deliveredTimestamp?: Date
   readTimestamp?: Date
   senderNumber: string
+  receiver?: string
+  instanceName?: string
   userName: string
   userPhoneNumber: string
+  sentFailedAt?:string|Date;
+  deliveredReadAt?:string|Date;
+  submittedAt?:string|Date;
 }
 
 export interface WhatsAppSentMessageResponse {

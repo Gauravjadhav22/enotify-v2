@@ -1,13 +1,12 @@
 import React from 'react'
-import { User } from '../data/schema'
-
+import { WhatsAppSentMessage } from '@/types/messages.ts'
 export type UsersDialogType = 'invite' | 'add' | 'edit' | 'delete'
 
 interface UsersContextType {
   open: UsersDialogType | null
   setOpen: (str: UsersDialogType | null) => void
-  currentRow: User | null
-  setCurrentRow: React.Dispatch<React.SetStateAction<User | null>>
+  currentRow: WhatsAppSentMessage | null
+  setCurrentRow: React.Dispatch<React.SetStateAction<WhatsAppSentMessage | null>>
 }
 
 const UsersContext = React.createContext<UsersContextType | null>(null)

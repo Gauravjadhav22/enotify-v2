@@ -6,7 +6,6 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 
 import { Instance } from "@/types/instances"
-import { User } from "@/types/user"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,

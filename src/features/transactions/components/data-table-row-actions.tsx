@@ -10,16 +10,15 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useUsersContext } from '../context/users-context'
-import { Report } from '../data/schema.ts'
-import { WhatsAppSentMessage } from '@/types/messages.ts'
+import { useTransactionContext } from '../context/transactions-context'
+import { Transaction } from '@/types/transaction'
 
 interface DataTableRowActionsProps {
-  row: Row<WhatsAppSentMessage>
+  row: Row<Transaction>
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
-  const { setOpen, setCurrentRow } = useUsersContext()
+  const { setOpen, setCurrentTransaction } = useTransactionContext()
 
   return (
     <>
@@ -36,7 +35,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         <DropdownMenuContent align='end' className='w-[160px]'>
           <DropdownMenuItem
             onClick={() => {
-              setCurrentRow(row?.original)
+              setCurrentTransaction(row?.original)
               setOpen('edit')
             }}
           >
@@ -48,7 +47,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              setCurrentRow(row?.original)
+              setCurrentTransaction(row?.original)
               setOpen('delete')
             }}
             className='!text-red-500'

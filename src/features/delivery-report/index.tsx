@@ -14,7 +14,6 @@ import { UsersInviteDialog } from '@/components/dialog/users-invite-dialog'
 import UsersContextProvider, {
   type UsersDialogType,
 } from './context/users-context'
-import { ReportListSchema, Report } from './data/schema'
 import { reports } from './data/reports'
 import { CommonTable } from '@/components/table/table'
 import { WhatsAppSentMessage } from '@/types/messages.ts'
@@ -29,7 +28,7 @@ export default function Reports() {
 
 
   // Parse user list
-  const reportList: Report[] = reports as WhatsAppSentMessage[]
+  const reportList: Report[] = reports as unknown as Report[]
   console.log(reportList);
 
   return (
@@ -62,7 +61,7 @@ export default function Reports() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <CommonTable columns={columns} data={reportList} />
+          <CommonTable columns={columns} data={reportList as unknown as WhatsAppSentMessage[]} />
         </div>
       </Main>
 
@@ -78,7 +77,7 @@ export default function Reports() {
         onOpenChange={() => setOpen('invite')}
       />
 
-      {currentRow && (
+      {/* {currentRow && (
         <>
           <UsersActionDialog
             key={`user-edit-${currentRow.id}`}
@@ -104,7 +103,7 @@ export default function Reports() {
             currentRow={currentRow}
           />
         </>
-      )}
+      )} */}
     </UsersContextProvider>
   )
 }
